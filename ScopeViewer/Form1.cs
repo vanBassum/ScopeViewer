@@ -30,6 +30,7 @@ namespace ScopeViewer
 
         private void button1_Click(object sender, EventArgs e)
         {
+            /*
             Trace t = new Trace();
             t.DrawStyle = Trace.DrawStyles.Lines;
             t.Pen = Pens.Yellow;
@@ -39,25 +40,32 @@ namespace ScopeViewer
             t.Points.Add(new PointD(2, 0));
             t.Points.Add(new PointD(3, 4));
             t.Points.Add(new PointD(4, 2));
-            scopeView1.DrawAll();
+            scopeView1.DrawAll();*/
 
         }
-
+        Trace t;
         private void button2_Click(object sender, EventArgs e)
         {
 
-            Trace t = new Trace();
+            t = new Trace();
             t.DrawStyle = Trace.DrawStyles.DiscreteSingal;
             //t.DrawOption = Trace.DrawOptions.ShowCrosses;
             scope.Traces.Add(t);
 
             for (int i = 0; i <= 100; i++)
             {
-                t.Points.Add(new PointD(((double)i)/10, 3 * Math.Sin(i * 2 * Math.PI / 100)));
+                t.Points.Add(new PointD(((double)i)/10, 10 * Math.Sin(i * 2 * Math.PI / 100)));
             }
 
             //scopeView1.Settings.TimeScale = 100;
 
+            scopeView1.DrawAll();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            scopeView1.AutoScaleHorizontal();
+            scopeView1.AutoScaleTrace(t);
             scopeView1.DrawAll();
         }
     }

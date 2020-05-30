@@ -29,15 +29,7 @@ namespace ScopeViewer.Scope.Controls
             DrawAll();
         }
 
-        private void Calculate()
-        {
-            columns = Settings.HorizontalDivisions;
-            hPxPerSub = this.Width / columns;
-            thiswidth = (int)(columns * hPxPerSub);
-            rows = Settings.VerticalDivisions;
-            vPxPerSub = this.Height / rows;
-            thisheight = (int)(rows * vPxPerSub);
-        }
+        
 
         private void ScopeView_Load(object sender, EventArgs e)
         {
@@ -60,9 +52,131 @@ namespace ScopeViewer.Scope.Controls
         }
 
 
+
+
+
+
+        #region Calculations
+
+        private void CalculateScopeSize()
+        {
+            columns = Settings.HorizontalDivisions;
+            hPxPerSub = this.Width / columns;
+            thiswidth = (int)(columns * hPxPerSub);
+            rows = Settings.VerticalDivisions;
+            vPxPerSub = this.Height / rows;
+            thisheight = (int)(rows * vPxPerSub);
+        }
+
+
+        public void AutoScaleTrace(Trace t)
+        {
+            if (double.IsNaN(t.Maximum.Y) || double.IsNaN(t.Maximum.X))
+            {
+                t.Scale = 1f;
+                t.Offset = 0f;
+                return;
+            }
+
+            double distance = t.Maximum.Y - t.Minimum.Y;
+            double div = distance / ((double)Settings.VerticalDivisions);
+            double multiplier = 1f;
+
+            while (div > 10)
+            {
+                multiplier *= 10;
+                div /= 10;
+            }
+
+            while (div < 0.5)
+            {
+                multiplier /= 10;
+                div *= 10;
+            }
+
+
+            if (div <= 1)
+                t.Scale = (double)(1 * multiplier);
+            else if (div <= 2)
+                t.Scale = (double)(2 * multiplier);
+            else if (div <= 5)
+                t.Scale = (double)(5 * multiplier);
+            else
+                t.Scale = (double)(10 * multiplier);
+
+            t.Offset = -(double)(distance / 2 + t.Minimum.Y);
+        }
+
+        public void AutoScaleHorizontal()
+        {
+            PointD min = PointD.Empty;
+            PointD max = PointD.Empty;
+
+            foreach(Trace t in DataSource.Traces)
+            {
+                min.KeepMinimum(t.Minimum);
+                max.KeepMaximum(t.Maximum);
+            }
+
+            double distance = max.X - min.X;
+            double div = distance / ((double)Settings.HorizontalDivisions);
+            double multiplier = 1f;
+
+            while (div > 10)
+            {
+                multiplier *= 10;
+                div /= 10;
+            }
+
+            while (div < 0.5)
+            {
+                multiplier /= 10;
+                div *= 10;
+            }
+
+
+            if (div <= 1)
+                Settings.HorScale = (double)(1 * multiplier);
+            else if (div <= 2)
+                Settings.HorScale = (double)(2 * multiplier);
+            else if (div <= 5)
+                Settings.HorScale = (double)(5 * multiplier);
+            else
+                Settings.HorScale = (double)(10 * multiplier);
+
+            Settings.HorOffset = -(double)( min.X);
+
+
+        }
+
+
+
+
+
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #region Drawing
+
         public void DrawAll()
         {
-            Calculate();
+            CalculateScopeSize();
             DrawBackground();
             DrawData();
             DrawForeground();
@@ -109,7 +223,7 @@ namespace ScopeViewer.Scope.Controls
                 }
                 else
                 {
-                    double pxPerUnits_hor = thiswidth / (Settings.TimeScale); // hPxPerSub * grid.Horizontal.SubDivs / (HorUnitsPerDivision /** grid.Horizontal.Divisions*/);
+                    double pxPerUnits_hor = thiswidth / (Settings.HorizontalDivisions * Settings.HorScale); // hPxPerSub * grid.Horizontal.SubDivs / (HorUnitsPerDivision /** grid.Horizontal.Divisions*/);
 
 
                     var sortedTraces = from trace in DataSource.Traces
@@ -146,8 +260,8 @@ namespace ScopeViewer.Scope.Controls
                                 for (int i = 0; i < pointCnt; i += inc)
                                 {
 
-                                    double x = (float)(trace.Points[i].X + Settings.TimeOffset) * pxPerUnits_hor;
-                                    double y = thisheight / 2 - (trace.Points[i].Y - trace.Offset) * pxPerUnits_ver * trace.Scale;
+                                    double x = (float)(trace.Points[i].X + Settings.HorOffset) * pxPerUnits_hor;
+                                    double y = thisheight / 2 - (trace.Points[i].Y + trace.Offset) * pxPerUnits_ver;// * trace.Scale;
 
                                     p = new Point((int)x, (int)y);
 
@@ -211,6 +325,8 @@ namespace ScopeViewer.Scope.Controls
 
             }
         }
+
+        #endregion
     }
 
 }

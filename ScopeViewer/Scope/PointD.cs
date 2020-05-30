@@ -3,10 +3,12 @@ using System.Drawing;
 
 namespace ScopeViewer.Scope
 {
-    public struct PointD
+    public class PointD
     {
-        public double X { get; set; }
-        public double Y { get; set; }
+        public double X { get; set; } = double.NaN;
+        public double Y { get; set; } = double.NaN;
+        public bool IsEmpty { get { return double.IsNaN(X) && double.IsNaN(Y); } set { X = double.NaN; Y = double.NaN; } }
+
 
         public PointD(double x, double y)
         {
@@ -27,8 +29,50 @@ namespace ScopeViewer.Scope
             Y = offsetY + Y * scaleY;
         }
 
+
+        public void KeepMinimum(PointD pt)
+        {
+            if (IsEmpty)
+            {
+                X = pt.X;
+                Y = pt.Y;
+            }
+            else
+            {
+                X = pt.X < X ? pt.X : X;
+                Y = pt.Y < Y ? pt.Y : Y;
+            }
+        }
+
+        public void KeepMaximum(PointD pt)
+        {
+            if (IsEmpty)
+            {
+                X = pt.X;
+                Y = pt.Y;
+            }
+            else
+            {
+                X = pt.X > X ? pt.X : X;
+                Y = pt.Y > Y ? pt.Y : Y;
+            }
+        }
+
+
+
+
         public static implicit operator PointF(PointD d) => new PointF((float)d.X, (float)d.Y);
         public static implicit operator PointD(Point d) => new PointD((float)d.X, (float)d.Y);
-    }
 
+        public static PointD Empty 
+        { 
+            get
+            {
+                PointD pt = new PointD(0, 0);
+                pt.IsEmpty = true;
+                return pt;
+            }
+        }
+        
+    }
 }
