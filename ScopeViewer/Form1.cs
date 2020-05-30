@@ -18,6 +18,7 @@ namespace ScopeViewer
             InitializeComponent();
             scopeView1.DataSource = scope;
             traceView1.DataSource = scope;
+            markerView1.DataSource = scope;
 
         }
 
@@ -48,16 +49,18 @@ namespace ScopeViewer
         {
 
             t = new Trace();
-            t.DrawStyle = Trace.DrawStyles.DiscreteSingal;
+            t.DrawStyle = Trace.DrawStyles.Lines;
             //t.DrawOption = Trace.DrawOptions.ShowCrosses;
             scope.Traces.Add(t);
 
             for (int i = 0; i <= 100; i++)
             {
-                t.Points.Add(new PointD(((double)i)/10, 10 * Math.Sin(i * 2 * Math.PI / 100)));
+                t.Points.Add(new PointD(((double)i), 10 * Math.Sin(i * 2 * Math.PI / 100)));
             }
 
             //scopeView1.Settings.TimeScale = 100;
+
+            scope.Markers.Add(new Marker() { X = 25 });
 
             scopeView1.DrawAll();
         }
