@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            ScopeViewer.Scope.Controls.ScopeViewSettings scopeViewSettings1 = new ScopeViewer.Scope.Controls.ScopeViewSettings();
+            FRMLib.Scope.Controls.ScopeViewSettings scopeViewSettings1 = new FRMLib.Scope.Controls.ScopeViewSettings();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.scopeView1 = new ScopeViewer.Scope.Controls.ScopeView();
-            this.traceView1 = new ScopeViewer.Scope.Controls.TraceView();
+            this.traceView1 = new FRMLib.Scope.Controls.TraceView();
+            this.scopeView1 = new FRMLib.Scope.Controls.ScopeView();
             this.SuspendLayout();
             // 
             // button1
@@ -67,13 +67,22 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // traceView1
+            // 
+            this.traceView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.traceView1.DataSource = null;
+            this.traceView1.Location = new System.Drawing.Point(12, 41);
+            this.traceView1.Name = "traceView1";
+            this.traceView1.Size = new System.Drawing.Size(296, 429);
+            this.traceView1.TabIndex = 6;
+            // 
             // scopeView1
             // 
             this.scopeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.scopeView1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("scopeView1.BackgroundImage")));
-            this.scopeView1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.scopeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.scopeView1.DataSource = null;
             this.scopeView1.Location = new System.Drawing.Point(314, 41);
@@ -86,26 +95,18 @@
             scopeViewSettings1.VerticalDivisions = 8;
             this.scopeView1.Settings = scopeViewSettings1;
             this.scopeView1.Size = new System.Drawing.Size(606, 429);
-            this.scopeView1.TabIndex = 0;
-            // 
-            // traceView1
-            // 
-            this.traceView1.DataSource = null;
-            this.traceView1.Location = new System.Drawing.Point(12, 41);
-            this.traceView1.Name = "traceView1";
-            this.traceView1.Size = new System.Drawing.Size(296, 429);
-            this.traceView1.TabIndex = 5;
+            this.scopeView1.TabIndex = 7;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(932, 482);
+            this.Controls.Add(this.scopeView1);
             this.Controls.Add(this.traceView1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.scopeView1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -115,11 +116,11 @@
 
         #endregion
 
-        private Scope.Controls.ScopeView scopeView1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        private Scope.Controls.TraceView traceView1;
+        private FRMLib.Scope.Controls.TraceView traceView1;
+        private FRMLib.Scope.Controls.ScopeView scopeView1;
     }
 }
 

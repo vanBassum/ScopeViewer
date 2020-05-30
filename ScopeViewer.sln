@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScopeViewer", "ScopeViewer\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "STDLib", "Library\STDLib\STDLib.csproj", "{D4BEEF9A-EF70-432D-BCF3-39B94008AA0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FRMLib", "Library\FRMLib\FRMLib.csproj", "{6062FC18-1C98-4F9A-BE4C-44171CBCB55E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D4BEEF9A-EF70-432D-BCF3-39B94008AA0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4BEEF9A-EF70-432D-BCF3-39B94008AA0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4BEEF9A-EF70-432D-BCF3-39B94008AA0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6062FC18-1C98-4F9A-BE4C-44171CBCB55E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6062FC18-1C98-4F9A-BE4C-44171CBCB55E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6062FC18-1C98-4F9A-BE4C-44171CBCB55E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6062FC18-1C98-4F9A-BE4C-44171CBCB55E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
